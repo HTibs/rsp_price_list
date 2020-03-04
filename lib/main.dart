@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:custom_splash/custom_splash.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'scopedModels/itemScopedModel.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -53,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: 100.0,
-              color: Color(0xFF9A9EAB),
+              color: Color(0xFFF1F1F2),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 //crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,9 +92,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Expanded(
-              child: Container(
-                color: Color(0xFFEC96A4),
-                //height: MediaQuery.of(context).size.height - 50.0,
+              child: ScopedModel(
+                model: ItemsScopedModel(),
+                child: Container(
+                  color: Color(0xFFF1F1F2),
+                  child: ScopedModelDescendant(builder: (BuildContext context,
+                      Widget child, ItemsScopedModel model) {
+                    return model.allItemsFutureBuilder(context);
+                  }),
+                  //height: MediaQuery.of(context).size.height - 50.0,
+                ),
               ),
             )
           ],

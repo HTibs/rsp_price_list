@@ -18,6 +18,8 @@ environment:
 
 dependencies:
   custom_splash: ^0.0.2
+  scoped_model: ^1.0.1
+  http: ^0.12.0+4
   flutter:
     sdk: flutter
 
