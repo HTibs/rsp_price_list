@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+import 'package:custom_splash/custom_splash.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: CustomSplash(
+      imagePath: 'assets/combine.png',
+      backGroundColor: Color(0xFFF1F1F2),
+      logoSize: 200,
+      home: MyHomePage(),
+      //customFunction: duringSplash,
+      duration: 2500,
+      type: CustomSplashType.StaticDuration,
+    ),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        // home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: Scaffold(
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/combine.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: null /* add child content here */,
+          ),
+        ));
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 100.0,
+              color: Color(0xFF9A9EAB),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('square.png'),
+                      radius: 35.0,
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          'text.png',
+                          height: 50.0,
+                        ),
+                        Text(
+                          'Price List App',
+                          style: TextStyle(
+                              color: Color(0xFF50312F),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                color: Color(0xFFEC96A4),
+                //height: MediaQuery.of(context).size.height - 50.0,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
