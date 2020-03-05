@@ -211,7 +211,7 @@ class ItemsScopedModel extends Model {
                 size: 30.0,
               ),
               Text(
-                '$temp',
+                '$temp%',
                 style: TextStyle(color: Colors.red),
               )
             ],

@@ -19,8 +19,8 @@ class Item {
         code: parsedJson['code'],
         name: parsedJson['name'],
         imageURI: parsedJson['imageURI'],
-        currentPrice: parsedJson['costPrice'],
-        previousPrice: parsedJson['sellPrice'],
-        description: parsedJson['id']);
+        currentPrice: parsedJson['currentPrice'],
+        previousPrice: parsedJson['previousPrice'],
+        description: parsedJson['description']);
   }
 }
