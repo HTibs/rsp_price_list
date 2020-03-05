@@ -37,7 +37,7 @@ class ItemsScopedModel extends Model {
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData
-              ? allItemsListBuilder(snapshot.data)
+              ? allItemsListBuildernew(snapshot.data)
               : Center(child: CircularProgressIndicator());
         });
   }
@@ -48,54 +48,180 @@ class ItemsScopedModel extends Model {
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 5.0, right: 5.0, left: 5.0),
-            child: Material(
-              borderRadius: BorderRadius.circular(15.0),
-              elevation: 2.0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      width: 70.0,
-                      height: 70.0,
+            child: SizedBox(
+              height: 150.0,
+              width: 100.0,
+              child: Material(
+                borderRadius: BorderRadius.circular(15.0),
+                elevation: 2.0,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                        width: 70.0,
+                        height: 70.0,
 
-                      // container for image
-                      color: Colors.grey,
+                        // container for image
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                  Column(
-                    //crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        all[index].name,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
+                    Column(
+                      //crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          all[index].name,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        'Previous Price: Rs ${all[index].currentPrice}',
-                        style: TextStyle(fontSize: 15.0, color: Colors.grey),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                    ],
-                  ),
-                ],
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          'Previous Price: Rs ${all[index].currentPrice}',
+                          style: TextStyle(fontSize: 15.0, color: Colors.grey),
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );
           ;
         });
+  }
+
+  Widget allItemsListBuildernew(List<Item> all) {
+    return GridView.builder(
+        itemCount: all.length,
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 5.0, right: 5.0, left: 5.0),
+            child: SizedBox(
+              height: 150.0,
+              child: Material(
+                  borderRadius: BorderRadius.circular(15.0),
+                  elevation: 2.0,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          width: 150.0,
+                          height: 100.0,
+                          // container for image
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        all[index].name,
+                        style:
+                            TextStyle(fontSize: 20.0, color: Color(0xFF800000)),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                '${all[index].currentPrice}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0),
+                              ),
+                              Text(
+                                'Price/kg',
+                                style: TextStyle(
+                                    color: Colors.grey, fontSize: 10.0),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          indicator(double.parse(all[index].previousPrice),
+                              double.parse(all[index].currentPrice))
+                        ],
+                      ),
+                    ],
+                  )),
+            ),
+          );
+          ;
+        });
+  }
+
+  Widget indicator(double pPrice, double cPrice) {
+    double calculateDifference(double previousPrice, double difference) {
+      double percentage;
+      percentage = previousPrice * difference / 100;
+
+      return percentage;
+    }
+
+    if (pPrice > cPrice) {
+      // show green indicator with down arrow
+      double temp;
+      temp = calculateDifference(pPrice, (pPrice - cPrice));
+      return Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.arrow_drop_down,
+                color: Colors.green,
+                size: 30.0,
+              ),
+              Text(
+                '$temp%',
+                style: TextStyle(color: Colors.green),
+              )
+            ],
+          ),
+          Text(
+            'Difference',
+            style: TextStyle(color: Colors.grey, fontSize: 10.0),
+          ),
+        ],
+      );
+    } else {
+      // show red indicator with red color text
+      double temp;
+      temp = calculateDifference(pPrice, (cPrice - pPrice));
+      return Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.arrow_drop_up,
+                color: Colors.red,
+                size: 30.0,
+              ),
+              Text(
+                '$temp',
+                style: TextStyle(color: Colors.red),
+              )
+            ],
+          ),
+          Text(
+            'Difference',
+            style: TextStyle(color: Colors.grey, fontSize: 10.0),
+          ),
+        ],
+      );
+    }
   }
 }

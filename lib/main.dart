@@ -6,6 +6,8 @@ import 'scopedModels/itemScopedModel.dart';
 
 void main() {
   runApp(MaterialApp(
+    theme:
+        ThemeData(primaryColor: Colors.amber, accentColor: Colors.amberAccent),
     home: CustomSplash(
       imagePath: 'assets/combine.png',
       backGroundColor: Color(0xFFF1F1F2),
@@ -16,29 +18,6 @@ void main() {
       type: CustomSplashType.StaticDuration,
     ),
   ));
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        // home: MyHomePage(title: 'Flutter Demo Home Page'),
-        home: Scaffold(
-          body: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/combine.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: null /* add child content here */,
-          ),
-        ));
-  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -80,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Text(
                           'Price List App',
                           style: TextStyle(
-                              color: Color(0xFF50312F),
+                              color: Color(0xFF800000),
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0),
                           textAlign: TextAlign.center,
@@ -95,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ScopedModel(
                 model: ItemsScopedModel(),
                 child: Container(
+                  padding: EdgeInsets.only(top: 5.0),
                   color: Color(0xFFF1F1F2),
                   child: ScopedModelDescendant(builder: (BuildContext context,
                       Widget child, ItemsScopedModel model) {
